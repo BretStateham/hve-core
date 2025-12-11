@@ -33,12 +33,13 @@ Specialized GitHub Copilot behaviors for common development workflows. Each chat
 
 Select from the **agent picker dropdown** in the Chat view:
 
-| Agent Name          | Purpose                                                         | Key Constraint                                 |
-| ------------------- | --------------------------------------------------------------- | ---------------------------------------------- |
-| **task-planner**    | Creates 3-file plan sets (plan, details, prompt)                | Requires research first; never implements code |
-| **task-researcher** | Produces research documents with evidence-based recommendations | Research-only; never plans or implements       |
-| **prompt-builder**  | Engineers and validates instruction/prompt files                | Dual-persona system with auto-testing          |
-| **pr-review**       | 4-phase PR review with tracking artifacts                       | Review-only; never modifies code               |
+| Agent Name                         | Purpose                                                         | Key Constraint                                 |
+| ---------------------------------- | --------------------------------------------------------------- | ---------------------------------------------- |
+| **task-planner**                   | Creates 3-file plan sets (plan, details, prompt)                | Requires research first; never implements code |
+| **task-researcher**                | Produces research documents with evidence-based recommendations | Research-only; never plans or implements       |
+| **prompt-builder**                 | Engineers and validates instruction/prompt files                | Dual-persona system with auto-testing          |
+| **pr-review**                      | 4-phase PR review with tracking artifacts                       | Review-only; never modifies code               |
+| **rai-impact-assessment-reviewer** | Reviews Microsoft RAI Impact Assessments with actionable feedback | Review-only; evaluates against RAI principles |
 
 ## Chat Mode Details
 
@@ -85,6 +86,16 @@ Select from the **agent picker dropdown** in the Chat view:
 **Workflow:** 4 phases (Initialize → Analyze → Collaborative Review → Finalize)  
 **Critical:** Review-only; never modifies code; evaluates 8 dimensions (functional correctness, design, idioms, reusability, performance, reliability, security, documentation)
 
+### rai-impact-assessment-reviewer
+
+**Creates:** Review tracking files and comprehensive reports:
+
+* `.copilot-tracking/rai-reviews/{project-name}-review.md`
+* `.copilot-tracking/rai-reviews/{project-name}-review-report.md`
+
+**Workflow:** 6 phases (Discovery → Completeness Assessment → Principle Analysis → Risk Review → Recommendations → Report Generation)  
+**Critical:** Review-only; evaluates against Microsoft's 6 RAI principles (Fairness, Reliability & Safety, Privacy & Security, Inclusiveness, Transparency, Accountability); provides prioritized, actionable recommendations
+
 ## Common Workflows
 
 **Planning a Feature:**
@@ -107,6 +118,15 @@ Select from the **agent picker dropdown** in the Chat view:
 2. Auto-validates with Prompt Tester persona
 3. Iterates up to 3 times for quality
 4. Delivered to `.github/instructions/`
+
+**Reviewing RAI Impact Assessment:**
+
+1. Select **rai-impact-assessment-reviewer** from agent picker - Start review process
+2. Provide or attach RAI Impact Assessment document
+3. Receive completeness assessment and principle-by-principle analysis
+4. Collaborate on findings and provide context
+5. Receive prioritized recommendations and comprehensive review report
+6. Review outputs in `.copilot-tracking/rai-reviews/`
 
 ## Important Notes
 
