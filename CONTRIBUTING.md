@@ -53,26 +53,26 @@ We strongly recommend using the provided DevContainer, which comes pre-configure
   - [Required Tools](#required-tools)
   - [Validation Commands](#validation-commands)
   - [Development Environment](#development-environment)
-  - [Code of Conduct](#code-of-conduct)
-  - [I Have a Question](#i-have-a-question)
-  - [I Want To Contribute](#i-want-to-contribute)
-    - [Reporting Bugs](#reporting-bugs)
-      - [Before Submitting a Bug Report](#before-submitting-a-bug-report)
-      - [How Do I Submit a Good Bug Report?](#how-do-i-submit-a-good-bug-report)
-    - [Suggesting Enhancements](#suggesting-enhancements)
-      - [Before Submitting an Enhancement](#before-submitting-an-enhancement)
-      - [How Do I Submit a Good Enhancement Suggestion?](#how-do-i-submit-a-good-enhancement-suggestion)
-    - [Your First Code Contribution](#your-first-code-contribution)
-    - [Improving The Documentation](#improving-the-documentation)
-  - [Style Guides](#style-guides)
-    - [Local Development Setup](#local-development-setup)
-    - [Coding Conventions](#coding-conventions)
-  - [Release Process](#release-process)
-    - [How Releases Work](#how-releases-work)
-    - [Version Determination](#version-determination)
-    - [Commit Message Examples](#commit-message-examples)
-    - [Release Validation](#release-validation)
-  - [Attribution](#attribution)
+- [Code of Conduct](#code-of-conduct)
+- [I Have a Question](#i-have-a-question)
+- [I Want To Contribute](#i-want-to-contribute)
+  - [Reporting Bugs](#reporting-bugs)
+  - [Suggesting Enhancements](#suggesting-enhancements)
+  - [Your First Code Contribution](#your-first-code-contribution)
+  - [Improving The Documentation](#improving-the-documentation)
+- [Style Guides](#style-guides)
+  - [Local Development Setup](#local-development-setup)
+  - [Coding Conventions](#coding-conventions)
+- [Testing Requirements](#testing-requirements)
+  - [When Tests Are Required](#when-tests-are-required)
+  - [Test Conventions](#test-conventions)
+  - [Running Tests Locally](#running-tests-locally)
+- [Release Process](#release-process)
+  - [How Releases Work](#how-releases-work)
+  - [Version Determination](#version-determination)
+  - [Commit Message Examples](#commit-message-examples)
+  - [Release Validation](#release-validation)
+- [Attribution](#attribution)
 
 ## Code of Conduct
 
@@ -196,6 +196,44 @@ Refer to the [DevContainer README](./.devcontainer/README.md) for detailed infor
 - Use consistent formatting as enforced by markdownlint
 - Run spell checking before committing changes
 - Format tables using the markdown-table-formatter tool
+
+## Testing Requirements
+
+New functionality MUST include tests. This policy ensures code quality and prevents regressions.
+
+### When Tests Are Required
+
+- New PowerShell scripts require corresponding `*.Tests.ps1` files
+- Bug fixes should include a regression test when feasible
+- Documentation-only or configuration-only changes do not require tests
+
+CI reports coverage at an 18% informational baseline; focus on meaningful coverage for new code rather than a strict percentage.
+
+### Test Conventions
+
+| Item      | Convention                                            |
+|-----------|-------------------------------------------------------|
+| Location  | `scripts/tests/` (mirrors source directory structure) |
+| Naming    | `*.Tests.ps1` suffix matching source script name      |
+| Framework | Pester 5.x                                            |
+
+Minimal example:
+
+```powershell
+Describe 'Get-Example' {
+    It 'Returns expected output' {
+        Get-Example | Should -Be 'expected'
+    }
+}
+```
+
+### Running Tests Locally
+
+```bash
+npm run test:ps
+```
+
+All PRs run Pester tests automatically via GitHub Actions. Tests must pass before merge.
 
 ## Release Process
 
